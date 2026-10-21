@@ -1,5 +1,6 @@
 package com.laestacion.grill
 
+import com.buffetelprimero.app.R
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
