@@ -1,0 +1,11 @@
+{
+  "name": "buffet-el-primero-sistema",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sistema de Punto de Venta, Buffet e Inventario para Buffet El Primero",
+  "scripts": {
+    "dev": "pnpm --filter ./frontend run dev",
+    "build": "pnpm --filter ./frontend run build",
+    "servidor": "node ./servidor/servidor.js"
+  }
+}

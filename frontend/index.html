@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#1e40af" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="BUFFET EL PRIMERO" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="description" content="Sistema de control de mesas, buffet, extras e inventario para Buffet El Primero." />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+    <title>BUFFET EL PRIMERO | Control de Mesas, Buffet e Inventario</title>
+    <style>
+      #pantalla-carga-inicio {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8fafc;
+        color: #0f172a;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        user-select: none;
+        transition: opacity 0.45s ease-out, visibility 0.45s ease-out;
+      }
+      #pantalla-carga-inicio.fade-out {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .contenedor-splash {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.5rem;
+        max-width: 380px;
+        width: 90%;
+      }
+      .emblema-splash {
+        position: relative;
+        width: 84px;
+        height: 84px;
+        margin-bottom: 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .aura-splash {
+        position: absolute;
+        inset: 0;
+        border-radius: 9999px;
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, rgba(37, 99, 235, 0.1) 50%, transparent 75%);
+        filter: blur(14px);
+        animation: pulso-azul 2s infinite alternate ease-in-out;
+      }
+      .caja-icono-splash {
+        position: relative;
+        z-index: 2;
+        width: 68px;
+        height: 68px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #1d4ed8, #2563eb, #3b82f6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+        border: 2px solid rgba(255, 255, 255, 0.9);
+      }
+      .icono-splash-svg {
+        width: 38px;
+        height: 38px;
+        color: #ffffff;
+      }
+      .titulo-splash {
+        font-size: 1.6rem;
+        font-weight: 900;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #1e3a8a;
+        margin: 0 0 0.35rem 0;
+      }
+      .subtitulo-splash {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #64748b;
+        letter-spacing: 0.05em;
+        margin: 0 0 1.75rem 0;
+      }
+      .barra-exterior-splash {
+        width: 100%;
+        height: 6px;
+        background-color: #e2e8f0;
+        border-radius: 9999px;
+        overflow: hidden;
+        position: relative;
+      }
+      .barra-interior-splash {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 45%;
+        border-radius: 9999px;
+        background: linear-gradient(90deg, #1d4ed8, #3b82f6, #93c5fd, #2563eb);
+        background-size: 200% 100%;
+        animation: barra-flujo 1.4s infinite ease-in-out;
+      }
+      .texto-estado-splash {
+        margin-top: 0.85rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #3b82f6;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      @keyframes pulso-azul {
+        0% { transform: scale(0.92); opacity: 0.6; }
+        100% { transform: scale(1.15); opacity: 1; }
+      }
+      @keyframes barra-flujo {
+        0% { left: -45%; }
+        50% { left: 40%; }
+        100% { left: 105%; }
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 text-slate-800 select-none">
+    <!-- Preloader inicial estático -->
+    <div id="pantalla-carga-inicio">
+      <div class="contenedor-splash">
+        <div class="emblema-splash">
+          <div class="aura-splash"></div>
+          <div class="caja-icono-splash">
+            <svg class="icono-splash-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Ícono de bandeja o plato con campana de buffet -->
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+              <line x1="6" y1="1" x2="6" y2="4"></line>
+              <line x1="10" y1="1" x2="10" y2="4"></line>
+              <line x1="14" y1="1" x2="14" y2="4"></line>
+            </svg>
+          </div>
+        </div>
+        <h1 class="titulo-splash">BUFFET EL PRIMERO</h1>
+        <p class="subtitulo-splash">Control de Mesas, Buffet e Inventario</p>
+        <div class="barra-exterior-splash">
+          <div class="barra-interior-splash"></div>
+        </div>
+        <span class="texto-estado-splash" id="etiqueta-estado-splash">Iniciando sistema...</span>
+      </div>
+    </div>
+
+    <div id="root"></div>
+    <script>
+      window.__ocultarPantallaCarga = function() {
+        var splash = document.getElementById('pantalla-carga-inicio');
+        if (splash && !splash.classList.contains('fade-out')) {
+          splash.classList.add('fade-out');
+          setTimeout(function() {
+            if (splash.parentNode) {
+              splash.parentNode.removeChild(splash);
+            }
+          }, 500);
+        }
+      };
+      setTimeout(window.__ocultarPantallaCarga, 4500);
+    </script>
+    <script type="module" src="./src/main.tsx"></script>
+  </body>
+</html>

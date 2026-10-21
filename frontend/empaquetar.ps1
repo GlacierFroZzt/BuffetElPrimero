@@ -1,0 +1,14 @@
+$distPath = "D:\BuffetElPrimero\frontend\dist"
+$servidorDir = "D:\BuffetElPrimero\servidor"
+if (-not (Test-Path $servidorDir)) { New-Item -ItemType Directory -Path $servidorDir -Force }
+$zipPath = "D:\BuffetElPrimero\servidor\web-bundle.zip"
+if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
+Add-Type -AssemblyName System.IO.Compression
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+$zipArchive = [System.IO.Compression.ZipFile]::Open($zipPath, [System.IO.Compression.ZipArchiveMode]::Create)
+Get-ChildItem -Path $distPath -Recurse -File | ForEach-Object {
+    $rel = $_.FullName.Substring($distPath.Length + 1).Replace("\", "/")
+    [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zipArchive, $_.FullName, $rel)
+}
+$zipArchive.Dispose()
+Write-Host "Zip creado exitosamente con tamaño: $((Get-Item $zipPath).Length) bytes"

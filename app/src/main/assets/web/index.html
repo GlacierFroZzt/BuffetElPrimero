@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#1e40af" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="BUFFET EL PRIMERO" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="description" content="Sistema de control de mesas, buffet, extras e inventario para Buffet El Primero." />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+    <title>BUFFET EL PRIMERO | Control de Mesas, Buffet e Inventario</title>
+    <style>#pantalla-carga-inicio{z-index:99999;color:#0f172a;-webkit-user-select:none;user-select:none;background-color:#f8fafc;flex-direction:column;justify-content:center;align-items:center;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;transition:opacity .45s ease-out,visibility .45s ease-out;display:flex;position:fixed;top:0;bottom:0;left:0;right:0}#pantalla-carga-inicio.fade-out{opacity:0;visibility:hidden;pointer-events:none}.contenedor-splash{text-align:center;flex-direction:column;align-items:center;width:90%;max-width:380px;padding:1.5rem;display:flex}.emblema-splash{justify-content:center;align-items:center;width:84px;height:84px;margin-bottom:1.25rem;display:flex;position:relative}.aura-splash{filter:blur(14px);background:radial-gradient(circle,#3b82f659 0%,#2563eb1a 50%,#0000 75%);border-radius:9999px;animation:2s ease-in-out infinite alternate pulso-azul;position:absolute;top:0;bottom:0;left:0;right:0}.caja-icono-splash{z-index:2;background:linear-gradient(135deg,#1d4ed8,#2563eb,#3b82f6);border:2px solid #ffffffe6;border-radius:20px;justify-content:center;align-items:center;width:68px;height:68px;display:flex;position:relative;box-shadow:0 10px 25px -5px #2563eb66,inset 0 1px 2px #ffffff80}.icono-splash-svg{color:#fff;width:38px;height:38px}.titulo-splash{letter-spacing:.12em;text-transform:uppercase;color:#1e3a8a;margin:0 0 .35rem;font-size:1.6rem;font-weight:900}.subtitulo-splash{color:#64748b;letter-spacing:.05em;margin:0 0 1.75rem;font-size:.85rem;font-weight:600}.barra-exterior-splash{background-color:#e2e8f0;border-radius:9999px;width:100%;height:6px;position:relative;overflow:hidden}.barra-interior-splash{background:linear-gradient(90deg,#1d4ed8,#3b82f6,#93c5fd,#2563eb) 0 0/200% 100%;border-radius:9999px;width:45%;animation:1.4s ease-in-out infinite barra-flujo;position:absolute;top:0;bottom:0}.texto-estado-splash{color:#3b82f6;text-transform:uppercase;letter-spacing:.08em;margin-top:.85rem;font-size:.75rem;font-weight:700}@keyframes pulso-azul{0%{opacity:.6;transform:scale(.92)}to{opacity:1;transform:scale(1.15)}}@keyframes barra-flujo{0%{left:-45%}50%{left:40%}to{left:105%}}</style>
+    <script type="module" crossorigin src="./assets/index-BVEXQqrA.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/vendor-supabase-BbozEmIR.js">
+    <link rel="modulepreload" crossorigin href="./assets/servicioSupabase-MoMpfih5.js">
+    <link rel="modulepreload" crossorigin href="./assets/vendor-react-B1c8pPkx.js">
+    <link rel="stylesheet" crossorigin href="./assets/index-lM79cLAm.css">
+  </head>
+  <body class="bg-slate-50 text-slate-800 select-none">
+    <!-- Preloader inicial estático -->
+    <div id="pantalla-carga-inicio">
+      <div class="contenedor-splash">
+        <div class="emblema-splash">
+          <div class="aura-splash"></div>
+          <div class="caja-icono-splash">
+            <svg class="icono-splash-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Ícono de bandeja o plato con campana de buffet -->
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+              <line x1="6" y1="1" x2="6" y2="4"></line>
+              <line x1="10" y1="1" x2="10" y2="4"></line>
+              <line x1="14" y1="1" x2="14" y2="4"></line>
+            </svg>
+          </div>
+        </div>
+        <h1 class="titulo-splash">BUFFET EL PRIMERO</h1>
+        <p class="subtitulo-splash">Control de Mesas, Buffet e Inventario</p>
+        <div class="barra-exterior-splash">
+          <div class="barra-interior-splash"></div>
+        </div>
+        <span class="texto-estado-splash" id="etiqueta-estado-splash">Iniciando sistema...</span>
+      </div>
+    </div>
+
+    <div id="root"></div>
+    <script>
+      window.__ocultarPantallaCarga = function() {
+        var splash = document.getElementById('pantalla-carga-inicio');
+        if (splash && !splash.classList.contains('fade-out')) {
+          splash.classList.add('fade-out');
+          setTimeout(function() {
+            if (splash.parentNode) {
+              splash.parentNode.removeChild(splash);
+            }
+          }, 500);
+        }
+      };
+      setTimeout(window.__ocultarPantallaCarga, 4500);
+    </script>
+  </body>
+</html>
