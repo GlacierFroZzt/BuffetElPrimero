@@ -1,16 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Tema Base de la Aplicación sin ActionBar -->
-    <style name="Theme.LaEstacionGrill" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Colores rústicos de Carretera Nacional -->
-        <item name="colorPrimary">#ea580c</item>
-        <item name="colorPrimaryVariant">#c2410c</item>
-        <item name="colorOnPrimary">#faf6f0</item>
-        <item name="colorSecondary">#facc15</item>
-        <item name="colorSecondaryVariant">#eab308</item>
-        <item name="colorOnSecondary">#12100e</item>
-        <!-- Barras del sistema oscuras y limpias -->
-        <item name="android:statusBarColor">#12100e</item>
-        <item name="android:navigationBarColor">#12100e</item>
-        <item name="android:windowBackground">#12100e</item>
+    <!-- Tema Base de Buffet El Primero sin ActionBar -->
+    <style name="Theme.BuffetElPrimero" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Colores corporativos Blanco y Azul -->
+        <item name="colorPrimary">#1e40af</item>
+        <item name="colorPrimaryVariant">#1d4ed8</item>
+        <item name="colorOnPrimary">#ffffff</item>
+        <item name="colorSecondary">#2563eb</item>
+        <item name="colorSecondaryVariant">#3b82f6</item>
+        <item name="colorOnSecondary">#ffffff</item>
+        <!-- Barras del sistema limpias -->
+        <item name="android:statusBarColor">#1e40af</item>
+        <item name="android:navigationBarColor">#f8fafc</item>
+        <item name="android:windowBackground">#f8fafc</item>
     </style>
+    <style name="Theme.LaEstacionGrill" parent="Theme.BuffetElPrimero" />
 </resources>

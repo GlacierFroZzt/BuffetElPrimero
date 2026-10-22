@@ -236,7 +236,7 @@ export interface AvisoBarra {
    TIPOS DE NAVEGACIÓN Y VISTAS
    ========================================================================== */
 
-export type VistaPrincipal = 'mesas' | 'inventario' | 'avisos_barra' | 'cocina';
+export type VistaPrincipal = 'mesas' | 'barra' | 'cocina' | 'inventario' | 'avisos_barra';
 
 export type TipoEventoSync =
   | 'SYNC_ESTADO_COMPLETO'

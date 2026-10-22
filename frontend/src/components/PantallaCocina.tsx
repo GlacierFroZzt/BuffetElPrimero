@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import type { EstadoPedidoCocina } from '../types';
 import { useRestaurante } from '../context/RestauranteContext';
-import { formatearHoraCorta } from '../utils/formateadores';
+import { formatearHoraCorta, formatearTiempoTranscurrido } from '../utils/formateadores';
 import { gestorAudioCocina, reproducirCampanaCocina } from '../utils/sonidoCocina';
 import { LienzoOroLiquido } from './LienzoOroLiquido';
 import { BotonOroLiquido } from './BotonOroLiquido';
@@ -20,6 +20,8 @@ export const PantallaCocina: React.FC = () => {
     pedidosCocina,
     cambiarEstadoPedidoCocina,
     alternarItemCompletadoCocina,
+    avisosBarra,
+    marcarAvisoBarraResurtido,
     nivelOroLiquido,
     tema,
   } = useRestaurante();
@@ -216,6 +218,60 @@ export const PantallaCocina: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {/* Solicitudes de Resurtido de Barra Urgentes para Cocina */}
+      {avisosBarra.filter((a) => a.estado === 'pendiente').length > 0 && (
+        <div className="mb-5 p-3.5 sm:p-4 rounded-2xl bg-rose-50 border-2 border-rose-300 shadow-md">
+          <div className="flex items-center justify-between mb-2.5">
+            <div className="flex items-center gap-2">
+              <span className="p-1.5 rounded-lg bg-rose-600 text-white animate-pulse">
+                <ChefHat className="w-4 h-4" />
+              </span>
+              <h3 className="font-black text-sm text-rose-900 uppercase tracking-wide">
+                ⚠️ Resurtidos Urgentes Solicitados por Barra:
+              </h3>
+            </div>
+            <span className="text-xs font-bold text-rose-700">
+              {avisosBarra.filter((a) => a.estado === 'pendiente').length} charola(s) por rellenar
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
+            {avisosBarra
+              .filter((a) => a.estado === 'pendiente')
+              .map((aviso) => {
+                const esUrgente = aviso.urgencia === 'urgente';
+                return (
+                  <div
+                    key={aviso.id}
+                    className={`p-3 rounded-xl border flex items-center justify-between gap-2 shadow-xs ${
+                      esUrgente
+                        ? 'bg-rose-100/90 border-rose-400 text-rose-950 font-black'
+                        : 'bg-white border-rose-200 text-slate-800 font-bold'
+                    }`}
+                  >
+                    <div className="min-w-0">
+                      <span className="text-xs block truncate leading-snug">
+                        {esUrgente ? '🔴 ' : '🟠 '} {aviso.platillo}
+                      </span>
+                      <span className="text-[10px] text-slate-500 font-normal">
+                        Hace {formatearTiempoTranscurrido(aviso.horaCreacion)}
+                      </span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => marcarAvisoBarraResurtido(aviso.id)}
+                      className="py-1.5 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs shrink-0 cursor-pointer shadow-xs active:scale-95 transition-all"
+                    >
+                      ¡Listo!
+                    </button>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      )}
 
       {/* Barra de Demanda Total en Fuego ("En el comal") */}
       {Object.keys(resumenProduccion).length > 0 && (

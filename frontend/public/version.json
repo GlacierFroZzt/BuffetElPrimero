@@ -1,7 +1,7 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "nombre": "BUFFET EL PRIMERO",
-  "timestamp": 1792622800000,
+  "timestamp": 1792631000000,
   "fecha": "21 de octubre de 2026",
-  "notas": "Versión inicial de Buffet El Primero: control de comensales (Adultos y Niños), venta de extras y refrescos, inventario integrado y avisos de barra a cocina."
+  "notas": "Optimización para celular con menú hamburguesa fijo y accesible, scroll fluido en avisos de barra, separación de módulos de Barra y Cocina, y corrección nativa en Android."
 }

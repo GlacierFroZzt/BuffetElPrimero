@@ -19,6 +19,7 @@ import {
   RefreshCw,
   Lock,
   GraduationCap,
+  Flame,
 } from 'lucide-react';
 import { useRestaurante } from '../context/RestauranteContext';
 import { gestorNavegacion } from '../utils/navegacionDispositivo';
@@ -59,6 +60,7 @@ export const NavbarSuperior: React.FC<NavbarSuperiorProps> = ({
     setNivelOroLiquido,
     inventario,
     avisosBarra,
+    pedidosCocina,
   } = useRestaurante();
 
   const [menuHamburguesaAbierto, setMenuHamburguesaAbierto] = useState<boolean>(false);
@@ -199,6 +201,9 @@ export const NavbarSuperior: React.FC<NavbarSuperiorProps> = ({
 
   const stockBajoCount = inventario.filter((i) => i.stockActual <= i.stockMinimo).length;
   const avisosBarraCount = avisosBarra.filter((a) => a.estado === 'pendiente').length;
+  const pedidosCocinaCount = pedidosCocina.filter(
+    (p) => p.estado === 'pendiente' || p.estado === 'en_preparacion'
+  ).length;
 
   const esClaro = tema === 'claro';
 
@@ -238,126 +243,141 @@ export const NavbarSuperior: React.FC<NavbarSuperiorProps> = ({
           </div>
         </button>
 
-        {/* Conmutador Central de Módulos: Mesas, Inventario, Avisos Barra */}
-        <div className="flex items-center p-0.5 sm:p-1 rounded-xl sm:rounded-2xl border border-slate-200 bg-slate-100 shrink-0 gap-0.5 sm:gap-1">
-          {/* Tab 1: Mesas */}
-          <button
-            type="button"
-            onClick={() => {
-              setVistaActual('mesas');
-            }}
-            className={`flex items-center gap-1 sm:gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer ${
-              vistaActual === 'mesas'
-                ? 'bg-blue-600 text-white shadow-xs font-black'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <LayoutGrid className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.4]" />
-            <span>Mesas</span>
-          </button>
+        {/* Conmutador Central de Módulos: Mesas, Barra, Cocina, Inventario */}
+        <div className="flex-1 min-w-0 flex items-center justify-center overflow-x-auto no-scrollbar py-0.5 px-0.5">
+          <div className="flex items-center p-0.5 sm:p-1 rounded-xl sm:rounded-2xl border border-slate-200 bg-slate-100 shrink-0 gap-0.5 sm:gap-1">
+            {/* Tab 1: Mesas */}
+            <button
+              type="button"
+              onClick={() => {
+                setVistaActual('mesas');
+              }}
+              className={`flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer whitespace-nowrap ${
+                vistaActual === 'mesas'
+                  ? 'bg-blue-600 text-white shadow-xs font-black'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <LayoutGrid className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.4]" />
+              <span>Mesas</span>
+            </button>
 
-          {/* Tab 2: Inventario */}
-          <button
-            type="button"
-            onClick={() => {
-              seleccionarMesa(null);
-              setVistaActual('inventario');
-            }}
-            className={`relative flex items-center gap-1 sm:gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer ${
-              vistaActual === 'inventario'
-                ? 'bg-blue-600 text-white shadow-xs font-black'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <ClipboardList className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.4]" />
-            <span>Inventario</span>
-            {stockBajoCount > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full bg-amber-500 text-white font-black text-[9px] sm:text-[10px] shadow-xs">
-                {stockBajoCount}
-              </span>
-            )}
-          </button>
+            {/* Tab 2: Barra (Avisos de Resurtido del Buffet) */}
+            <button
+              type="button"
+              onClick={() => {
+                seleccionarMesa(null);
+                setVistaActual('barra');
+              }}
+              className={`relative flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer whitespace-nowrap ${
+                vistaActual === 'barra' || vistaActual === 'avisos_barra'
+                  ? 'bg-blue-600 text-white shadow-xs font-black'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <ChefHat className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.4]" />
+              <span>Barra</span>
+              {avisosBarraCount > 0 && (
+                <span className="px-1.5 py-0.2 rounded-full bg-rose-600 text-white font-black text-[9px] sm:text-[10px] animate-pulse shadow-xs">
+                  {avisosBarraCount}
+                </span>
+              )}
+            </button>
 
-          {/* Tab 3: Avisos Barra a Cocina */}
-          <button
-            type="button"
-            onClick={() => {
-              seleccionarMesa(null);
-              setVistaActual('avisos_barra');
-            }}
-            className={`relative flex items-center gap-1 sm:gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer ${
-              vistaActual === 'avisos_barra'
-                ? 'bg-blue-600 text-white shadow-xs font-black'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <ChefHat className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.4]" />
-            <span>Avisos Barra</span>
-            {avisosBarraCount > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full bg-rose-600 text-white font-black text-[9px] sm:text-[10px] animate-pulse shadow-xs">
-                {avisosBarraCount}
-              </span>
-            )}
-          </button>
+            {/* Tab 3: Cocina (KDS y Asador) */}
+            <button
+              type="button"
+              onClick={() => {
+                seleccionarMesa(null);
+                setVistaActual('cocina');
+              }}
+              className={`relative flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer whitespace-nowrap ${
+                vistaActual === 'cocina'
+                  ? 'bg-blue-600 text-white shadow-xs font-black'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.4]" />
+              <span>Cocina</span>
+              {pedidosCocinaCount > 0 && (
+                <span className="px-1.5 py-0.2 rounded-full bg-amber-500 text-slate-950 font-black text-[9px] sm:text-[10px] shadow-xs">
+                  {pedidosCocinaCount}
+                </span>
+              )}
+            </button>
+
+            {/* Tab 4: Inventario */}
+            <button
+              type="button"
+              onClick={() => {
+                seleccionarMesa(null);
+                setVistaActual('inventario');
+              }}
+              className={`relative flex items-center gap-1 sm:gap-1.5 px-2 py-1.5 sm:px-3 sm:py-1.5 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm transition-all active:scale-95 cursor-pointer whitespace-nowrap ${
+                vistaActual === 'inventario'
+                  ? 'bg-blue-600 text-white shadow-xs font-black'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <ClipboardList className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.4]" />
+              <span className="hidden xs:inline">Inventario</span>
+              <span className="xs:hidden">Stock</span>
+              {stockBajoCount > 0 && (
+                <span className="px-1.5 py-0.2 rounded-full bg-amber-500 text-white font-black text-[9px] sm:text-[10px] shadow-xs">
+                  {stockBajoCount}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
 
-        {/* Acciones Derecha: Monitor de red y Botón Hamburguesa */}
-        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+        {/* Acciones Derecha: Monitor de red y Botón Hamburguesa fijo */}
+        <div className="flex items-center gap-1 sm:gap-1.5 shrink-0 z-20">
           {/* Monitor de sincronización clickeable */}
           <button
             type="button"
             onClick={onAbrirConfiguracionServidor}
-            className={`flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-bold border transition-colors cursor-pointer active:scale-95 shrink-0 ${
+            className={`flex items-center gap-1 px-1.5 py-1.5 sm:px-2.5 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-bold border transition-colors cursor-pointer active:scale-95 shrink-0 ${
               estaEnLinea
-                ? esClaro
-                  ? 'bg-emerald-50 hover:bg-emerald-100 border-emerald-300 text-emerald-700'
-                  : 'bg-emerald-950/80 hover:bg-emerald-900 border-emerald-600/50 text-emerald-400'
+                ? 'bg-emerald-50 hover:bg-emerald-100 border-emerald-300 text-emerald-700'
                 : 'bg-amber-950/90 hover:bg-amber-900 border-amber-500 text-amber-300'
             }`}
             title="Ver estado de conexión del restaurante"
           >
             {estaEnLinea ? (
               <>
-                <Cloud className="w-3.5 h-3.5 text-emerald-500 animate-pulse shrink-0" />
-                <span className="font-black hidden xs:inline">En línea</span>
+                <Cloud className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                <span className="font-black hidden md:inline">En línea</span>
               </>
             ) : (
               <>
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping shrink-0" />
-                <span className="font-black hidden xs:inline">Sin red</span>
+                <span className="font-black hidden md:inline">Sin red</span>
               </>
             )}
           </button>
 
-          {/* Botón Acceso Rápido Tutorial */}
+          {/* Botón Acceso Rápido Tutorial (visible en pantallas medianas) */}
           <button
             type="button"
             onClick={onAbrirManualFunciones}
-            className={`flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-black border transition-all cursor-pointer active:scale-95 shrink-0 ${
-              esClaro
-                ? 'bg-amber-100 hover:bg-amber-200 border-amber-300 text-amber-900 shadow-2xs'
-                : 'bg-amber-500/15 hover:bg-amber-500/25 border-amber-500/40 text-amber-300'
-            }`}
+            className="hidden lg:flex items-center gap-1 sm:gap-1.5 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-black border transition-all cursor-pointer active:scale-95 shrink-0 bg-blue-50 hover:bg-blue-100 border-blue-200 text-blue-900 shadow-2xs"
             title="Abrir Tutorial y Manual de Funciones"
             aria-label="Abrir Tutorial y Manual de Funciones"
           >
-            <GraduationCap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 shrink-0" />
-            <span className="hidden sm:inline">Tutorial</span>
+            <GraduationCap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-600 shrink-0" />
+            <span>Tutorial</span>
           </button>
 
-          {/* Botón Menú Hamburguesa Principal */}
+          {/* Botón Menú Hamburguesa Principal - SIEMPRE VISIBLE */}
           <button
             type="button"
             onClick={() => setMenuHamburguesaAbierto(true)}
-            className={`p-1.5 sm:p-2.5 rounded-xl border flex items-center justify-center transition-all active:scale-95 cursor-pointer shadow-sm shrink-0 ${
-              esClaro
-                ? 'bg-stone-100 hover:bg-stone-200 border-stone-300 text-stone-800'
-                : 'bg-stone-800 hover:bg-stone-700 border-stone-700 text-stone-100'
-            }`}
+            className="p-2 sm:p-2.5 rounded-xl border flex items-center justify-center transition-all active:scale-95 cursor-pointer shadow-xs shrink-0 bg-blue-50 hover:bg-blue-100 border-blue-200 text-blue-700 min-w-[36px] min-h-[36px]"
             title="Abrir menú de opciones"
             aria-label="Abrir menú principal"
           >
-            <Menu className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
+            <Menu className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 stroke-[2.5]" />
           </button>
         </div>
       </header>

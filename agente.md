@@ -29,7 +29,11 @@
    - *Solución:* Se removió la propiedad no utilizada para cumplir con `noUnusedLocals` y `strict: true`.
 
 ## 3. Estado de la Suite y Módulos Activos
-- **Compilación:** `tsc -b && vite build` compila al 100% con código 0 y empaquetado optimizado con `pnpm`.
+- **Servidor Local Activo:** Vite corriendo en `http://localhost:5173/` (y en red local).
+- **Compilación Android (APK):** Generado exitosamente en `d:\BuffetElPrimero\BuffetElPrimero-v1.0.0.apk` con namespace `com.buffetelprimero.app` e identidad Buffet El Primero.
+- **Despliegue OTA en Supabase:** Paquete `web-bundle.zip` y `version.json` (v1.0.0) subidos y activos en el bucket público de Supabase.
+- **Repositorio Remoto en GitHub:** Repositorio público sincronizado y publicado en `https://github.com/GlacierFroZzt/BuffetElPrimero`.
+- **Compilación Web:** `tsc -b && vite build` compila al 100% con código 0 y empaquetado optimizado con `pnpm`.
 - **Branding:** Blanco y azul (`bg-slate-50`, `bg-blue-600`, `text-blue-900`) en toda la interfaz.
 - **Flujo de Buffet:**
   - Apertura de mesa con diálogo directo de comensales (Adultos $180, Niños $95).

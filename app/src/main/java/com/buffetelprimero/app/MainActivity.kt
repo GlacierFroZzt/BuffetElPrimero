@@ -1,6 +1,5 @@
-package com.laestacion.grill
+package com.buffetelprimero.app
 
-import com.buffetelprimero.app.R
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
@@ -46,7 +45,7 @@ import android.Manifest
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        const val CANAL_ID = "canal_taqueria_alertas"
+        const val CANAL_ID = "canal_buffet_alertas"
         const val CODIGO_PERMISO_NOTIF = 101
     }
 
@@ -328,7 +327,7 @@ class MainActivity : AppCompatActivity() {
 
             val canal = NotificationChannel(
                 CANAL_ID,
-                "Alertas de Alta Prioridad - La Estación Grill",
+                "Alertas de Alta Prioridad - Buffet El Primero",
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
                 description = "Notificaciones críticas de crasheos, errores y eventos importantes del restaurante"

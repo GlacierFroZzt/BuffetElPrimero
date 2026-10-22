@@ -37,6 +37,7 @@ import { TourGuiadoFlotante } from './components/TourGuiadoFlotante';
 import { ModalManualFunciones } from './components/ModalManualFunciones';
 import { ModuloInventario } from './components/ModuloInventario';
 import { PantallaAvisosBarra } from './components/PantallaAvisosBarra';
+import { PantallaCocina } from './components/PantallaCocina';
 
 const PantallaPrincipal: React.FC = () => {
   const {
@@ -354,8 +355,10 @@ const PantallaPrincipal: React.FC = () => {
         <div className="relative z-10 flex-1 min-h-0 w-full flex flex-col overflow-hidden">
           {vistaActual === 'inventario' ? (
             <ModuloInventario />
-          ) : vistaActual === 'avisos_barra' ? (
+          ) : vistaActual === 'barra' || vistaActual === 'avisos_barra' ? (
             <PantallaAvisosBarra />
+          ) : vistaActual === 'cocina' ? (
+            <PantallaCocina />
           ) : !mesaSeleccionada ? (
             <DashboardMesas />
           ) : (
